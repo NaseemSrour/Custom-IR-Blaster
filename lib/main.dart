@@ -176,13 +176,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         customSendIR(
                             Constants.SMALL_BRIGHTNESS_UP, "Brightness+ SMALL");
                       },
-                      child: Icon(Icons.add)),
+                      child: Icon(Icons.light_mode)),
                   ElevatedButton(
                       onPressed: () async {
                         customSendIR(Constants.SMALL_BRIGHTNESS_DOWN,
                             "Brightness- SMALL");
                       },
-                      child: Icon(Icons.remove)),
+                      child: Icon(Icons.light_mode_outlined)),
                 ],
               ),
               Column(
@@ -234,18 +234,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   const SizedBox(height: 6),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SimpleElevatedButtonWithIcon(
-                        label: const Text("ON"),
-                        iconData: Icons.light_mode,
-                        color: Colors.green,
-                        onPressed: () async {
-                          customSendIR(
-                              Constants.LARGE_1000W_ON_LIST, "ON 1000W LARGE");
-                        },
-                      ),
                       SimpleElevatedButtonWithIcon(
                         label: const Text("OFF"),
                         iconData: Icons.tv_off,
@@ -254,9 +245,40 @@ class _MyHomePageState extends State<MyHomePage> {
                           customSendIR(Constants.LARGE_1000W_OFF_LIST,
                               "OFF 1000W LARGE");
                         },
-                      )
+                      ),
+                      const SizedBox(height: 35),
                     ],
-                  )
+                  ),
+                  const SizedBox(height: 35),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () async {
+                              customSendIR(
+                                  Constants.LARGE_1000W_FULL_BRIGHTNESS_LIST,
+                                  "Brightness+ LARGE");
+                            },
+                            child: Icon(Icons.light_mode)),
+                        ElevatedButton(
+                            onPressed: () async {
+                              customSendIR(
+                                  Constants.LARGE_1000W_HALF_BRIGHTNESS_LIST,
+                                  "Brightness- LARGE");
+                            },
+                            child: Icon(Icons.light_mode_outlined))
+                      ]),
+                  const SizedBox(height: 28),
+                  ElevatedButton(
+                      onPressed: () async {
+                        customSendIR(
+                            Constants.LARGE_1000W_ALWAYS_LIST, "LARGE Always");
+                      },
+                      child: Text(
+                        "Always",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                  const SizedBox(height: 40)
                 ],
               ),
             ],

@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ir_sensor_plugin/ir_sensor_plugin.dart';
 import 'package:remote_ir/constants.dart' as Constants;
+import 'package:remote_ir/globals.dart' as Globals;
 
 void main() {
   runApp(MyApp());
@@ -97,192 +100,219 @@ class _MyHomePageState extends State<MyHomePage> {
     initPlatformState();
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            "ظهير المُغُر",
-            style: TextStyle(fontSize: 25),
-          ),
-          centerTitle: true,
-        ),
+            title: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.rotationZ(Globals.rotationAngle),
+                child: Text(
+                  "ظهير المُغُر",
+                  style: TextStyle(fontSize: 25),
+                )),
+            centerTitle: true,
+            actions: <Widget>[
+              Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationZ(Globals.rotationAngle),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        Globals.rotationAngle =
+                            (Globals.rotationAngle - pi).abs();
+                      });
+                    },
+                    icon: Icon(Icons.flip_camera_android), // The icon
+                    label: Text("إفتل الشاشة"), // The text
+                  )),
+            ]),
         body: Container(
           child: SingleChildScrollView(
-              child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Running on: $_platformVersion\n'),
-              Text('Has Ir Emitter: $_hasIrEmitter\n'),
-              Text('IR Carrier Frequencies:$_getCarrierFrequencies'),
-              TextFormField(
-                key: Key('textField_code_hex'),
-                decoration: InputDecoration(
-                  hintText: 'Write specific String code to transmit',
-                  suffixIcon: IconButton(
-                    onPressed: () => {},
-                    icon: Icon(Icons.clear),
-                  ),
-                ),
-                controller: txtCtrl,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Write the code to transmit';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                "Systems",
-                style: TextStyle(fontSize: 25),
-              ),
-              const SizedBox(height: 60),
-              const Text(
-                "الصغير",
-                style: TextStyle(fontSize: 40),
-              ),
-              const SizedBox(height: 6),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SimpleElevatedButtonWithIcon(
-                    label: const Text("ON"),
-                    iconData: Icons.light_mode,
-                    color: Colors.green,
-                    onPressed: () async {
-                      print(_platformVersion);
-                      String TV_POWER_HEX = txtCtrl.text;
-                      // final String result = await IrSensorPlugin.transmitString(pattern: TV_POWER_HEX);
-                      customSendIR(Constants.SMALL_ON_LIST, "ON SMALL");
-                    },
-                  ),
-                  SimpleElevatedButtonWithIcon(
-                    label: const Text("OFF"),
-                    iconData: Icons.tv_off,
-                    color: Colors.red,
-                    onPressed: () async {
-                      customSendIR(Constants.SMALL_OFF_LIST, "OFF SMALL");
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 35),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        customSendIR(
-                            Constants.SMALL_BRIGHTNESS_UP, "Brightness+ SMALL");
-                      },
-                      child: Icon(Icons.light_mode)),
-                  ElevatedButton(
-                      onPressed: () async {
-                        customSendIR(Constants.SMALL_BRIGHTNESS_DOWN,
-                            "Brightness- SMALL");
-                      },
-                      child: Icon(Icons.light_mode_outlined)),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 40),
-                  const Text(
-                    "Wالفوتة - الكبير 600",
-                    style: TextStyle(fontSize: 40),
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SimpleElevatedButtonWithIcon(
-                        label: const Text("ON/OFF"),
-                        iconData: Icons.light_mode,
-                        color: Colors.orange,
-                        onPressed: () async {
-                          customSendIR(Constants.BIG_600W_ON_OFF_LIST,
-                              "ON/OFF 600W BIG");
-                        },
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 35),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () async {
-                            customSendIR(Constants.BIG_600W_BRIGHTNESS_UP,
-                                "Brightness+ BIG 600W");
-                          },
-                          child: Icon(Icons.add)),
-                      ElevatedButton(
-                          onPressed: () async {
-                            customSendIR(Constants.BIG_600W_BRIGHTNESS_DOWN,
-                                "Brightness- BIG 600W");
-                          },
-                          child: Icon(Icons.remove)),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  const Text(
-                    "Wالقعدة - الكبير 1000",
-                    style: TextStyle(fontSize: 40),
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
+              child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.rotationZ(Globals.rotationAngle),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SimpleElevatedButtonWithIcon(
-                        label: const Text("OFF"),
-                        iconData: Icons.tv_off,
-                        color: Colors.red,
-                        onPressed: () async {
-                          customSendIR(Constants.LARGE_1000W_OFF_LIST,
-                              "OFF 1000W LARGE");
+                      Text('Running on: $_platformVersion\n'),
+                      Text('Has Ir Emitter: $_hasIrEmitter\n'),
+                      Text('IR Carrier Frequencies:$_getCarrierFrequencies'),
+                      TextFormField(
+                        key: Key('textField_code_hex'),
+                        decoration: InputDecoration(
+                          hintText: 'Write specific String code to transmit',
+                          suffixIcon: IconButton(
+                            onPressed: () => {},
+                            icon: Icon(Icons.clear),
+                          ),
+                        ),
+                        controller: txtCtrl,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Write the code to transmit';
+                          }
+                          return null;
                         },
                       ),
-                      const SizedBox(height: 35),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Systems",
+                            style: TextStyle(fontSize: 25),
+                          ),
+                          const SizedBox(height: 60),
+                          Text(
+                            "الصغير",
+                            style: TextStyle(fontSize: 40),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SimpleElevatedButtonWithIcon(
+                                label: const Text("ON"),
+                                iconData: Icons.light_mode,
+                                color: Colors.green,
+                                onPressed: () async {
+                                  print(_platformVersion);
+                                  String TV_POWER_HEX = txtCtrl.text;
+                                  // final String result = await IrSensorPlugin.transmitString(pattern: TV_POWER_HEX);
+                                  customSendIR(
+                                      Constants.SMALL_ON_LIST, "ON SMALL");
+                                },
+                              ),
+                              SimpleElevatedButtonWithIcon(
+                                label: const Text("OFF"),
+                                iconData: Icons.tv_off,
+                                color: Colors.red,
+                                onPressed: () async {
+                                  customSendIR(
+                                      Constants.SMALL_OFF_LIST, "OFF SMALL");
+                                },
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 35),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    customSendIR(Constants.SMALL_BRIGHTNESS_UP,
+                                        "Brightness+ SMALL");
+                                  },
+                                  child: Icon(Icons.light_mode)),
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    customSendIR(
+                                        Constants.SMALL_BRIGHTNESS_DOWN,
+                                        "Brightness- SMALL");
+                                  },
+                                  child: Icon(Icons.light_mode_outlined)),
+                            ],
+                          ),
+                          const SizedBox(height: 40),
+                          const Text(
+                            "Wالفوتة - الكبير 600",
+                            style: TextStyle(fontSize: 40),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SimpleElevatedButtonWithIcon(
+                                label: const Text("ON/OFF"),
+                                iconData: Icons.light_mode,
+                                color: Colors.orange,
+                                onPressed: () async {
+                                  customSendIR(Constants.BIG_600W_ON_OFF_LIST,
+                                      "ON/OFF 600W BIG");
+                                },
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 35),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    customSendIR(
+                                        Constants.BIG_600W_BRIGHTNESS_UP,
+                                        "Brightness+ BIG 600W");
+                                  },
+                                  child: Icon(Icons.add)),
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    customSendIR(
+                                        Constants.BIG_600W_BRIGHTNESS_DOWN,
+                                        "Brightness- BIG 600W");
+                                  },
+                                  child: Icon(Icons.remove)),
+                            ],
+                          ),
+                          const SizedBox(height: 40),
+                          const Text(
+                            "Wالقعدة - الكبير 1000",
+                            style: TextStyle(fontSize: 40),
+                          ),
+                          const SizedBox(height: 6),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SimpleElevatedButtonWithIcon(
+                                label: const Text("OFF"),
+                                iconData: Icons.tv_off,
+                                color: Colors.red,
+                                onPressed: () async {
+                                  customSendIR(Constants.LARGE_1000W_OFF_LIST,
+                                      "OFF 1000W LARGE");
+                                },
+                              ),
+                              const SizedBox(height: 35),
+                            ],
+                          ),
+                          const SizedBox(height: 35),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      customSendIR(
+                                          Constants
+                                              .LARGE_1000W_FULL_BRIGHTNESS_LIST,
+                                          "Brightness+ LARGE");
+                                    },
+                                    child: Icon(Icons.light_mode)),
+                                ElevatedButton(
+                                    onPressed: () async {
+                                      customSendIR(
+                                          Constants
+                                              .LARGE_1000W_HALF_BRIGHTNESS_LIST,
+                                          "Brightness- LARGE");
+                                    },
+                                    child: Icon(Icons.light_mode_outlined))
+                              ]),
+                          const SizedBox(height: 28),
+                          ElevatedButton(
+                              onPressed: () async {
+                                customSendIR(Constants.LARGE_1000W_ALWAYS_LIST,
+                                    "LARGE Always");
+                              },
+                              child: Text(
+                                "Always",
+                                style: TextStyle(color: Colors.white),
+                              )),
+                          const SizedBox(height: 40)
+                        ],
+                      ),
                     ],
-                  ),
-                  const SizedBox(height: 35),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () async {
-                              customSendIR(
-                                  Constants.LARGE_1000W_FULL_BRIGHTNESS_LIST,
-                                  "Brightness+ LARGE");
-                            },
-                            child: Icon(Icons.light_mode)),
-                        ElevatedButton(
-                            onPressed: () async {
-                              customSendIR(
-                                  Constants.LARGE_1000W_HALF_BRIGHTNESS_LIST,
-                                  "Brightness- LARGE");
-                            },
-                            child: Icon(Icons.light_mode_outlined))
-                      ]),
-                  const SizedBox(height: 28),
-                  ElevatedButton(
-                      onPressed: () async {
-                        customSendIR(
-                            Constants.LARGE_1000W_ALWAYS_LIST, "LARGE Always");
-                      },
-                      child: Text(
-                        "Always",
-                        style: TextStyle(color: Colors.white),
-                      )),
-                  const SizedBox(height: 40)
-                ],
-              ),
-            ],
-          )),
+                  ))),
         ));
   }
 

@@ -9,7 +9,7 @@ My own custom offline IR Blaster app for phones with an IR transmitter sensor. T
 
 This is a Flutter-based mobile app I built to control home devices (like outdoor projectors and sensors) using infrared, without needing the original remote or an internet connection.
 
-The app sends raw IR signals directly from the phone’s built-in IR blaster. I built it mainly to control a no-brand projectors in a wilderness garden in the woods that constantly remembering to bring their remotes with you is a hassle. Most universal remote apps either require internet, don’t support the device, or are cluttered with ads and limitations — so I decided to make a custom one that just works.
+The app sends raw IR signals directly from the phone’s built-in IR blaster. I built it mainly to control no-brand projectors in a wilderness garden in the woods that constantly remembering to bring their remotes with you is a hassle. Most universal remote apps either require internet, don’t support the device, or are cluttered with ads and limitations — so I decided to make a custom one that just works.
 
 ---
 

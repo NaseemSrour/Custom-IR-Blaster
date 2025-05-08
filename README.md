@@ -57,11 +57,17 @@ After showing it to a few friends, they loved the idea and asked for copies to u
 ## 📂 Folder Overview
 
 Custom-IR-Blaster/
+
 ├── lib/ # Flutter app code
+
 ├── android/ # Android-specific native setup
+
 ├── test/ # Basic test setup
+
 ├── IR Sketch.docx # Arduino sketch for IR capture
+
 ├── Projectors IR Codes.xlsx # Captured IR codes
+
 └── pubspec.yaml # Dependencies and assets
 
 
